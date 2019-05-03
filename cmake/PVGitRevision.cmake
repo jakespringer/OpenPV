@@ -42,6 +42,6 @@ endif ()
 file(MAKE_DIRECTORY ${PV_CONFIG_FILE_DIR})
 configure_file (
    "${SOURCE_DIR}/src/pvGitRevision.template"
-   "${PV_CONFIG_FILE_DIR}/pvGitRevision.h"
+   "${PV_CONFIG_FILE_DIR}/pvGitRevision.hpp"
 )
 

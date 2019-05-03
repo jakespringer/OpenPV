@@ -1,1 +1,9 @@
-#define PV_GIT_REVISION "@PV_GIT_REVISION@"
+#ifndef PVGITREVISION_HPP_
+#define PVGITREVISION_HPP_
+
+namespace PV {
+   constexpr char const *pvGitRevision =
+         "@PV_GIT_REVISION@";
+}
+
+#endif

@@ -14,8 +14,8 @@
 #include "columns/Factory.hpp"
 #include "columns/RandomSeed.hpp"
 #include "io/PrintStream.hpp"
-#include "pvGitRevision.h"
 #include "utils/ExpandLeadingTilde.hpp"
+#include "utils/GitRevisionString.hpp"
 
 #include <assert.h>
 #include <cmath>
@@ -903,7 +903,7 @@ void HyPerCol::outputParams(char const *path) {
 
 void HyPerCol::outputParamsHeadComments(FileStream *fileStream, char const *commentToken) {
    time_t t = time(nullptr);
-   fileStream->printf("%s PetaVision, " PV_GIT_REVISION "\n", commentToken);
+   fileStream->printf("%s PetaVision, %s\n", commentToken, GitRevisionString());
    fileStream->printf("%s Run time %s", commentToken, ctime(&t)); // output of ctime contains \n
 #ifdef PV_USE_MPI
    MPIBlock const *mpiBlock = mCheckpointer->getMPIBlock();

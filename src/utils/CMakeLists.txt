@@ -6,6 +6,7 @@ set (PVLibSrcCpp ${PVLibSrcCpp}
    ${SUBDIR}/CompareParamsFiles.cpp
    ${SUBDIR}/conversions.hpp
    ${SUBDIR}/ExpandLeadingTilde.cpp
+   ${SUBDIR}/GitRevisionString.cpp
    ${SUBDIR}/PVAssert.cpp
    ${SUBDIR}/PVAlloc.cpp
    ${SUBDIR}/PVLog.cpp
@@ -21,6 +22,7 @@ set (PVLibSrcHpp ${PVLibSrcHpp}
    ${SUBDIR}/Clock.hpp
    ${SUBDIR}/CompareParamsFiles.hpp
    ${SUBDIR}/ExpandLeadingTilde.hpp
+   ${SUBDIR}/GitRevisionString.hpp
    ${SUBDIR}/PVAssert.hpp
    ${SUBDIR}/PVAlloc.hpp
    ${SUBDIR}/PVLog.hpp
