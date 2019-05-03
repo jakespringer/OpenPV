@@ -1,3 +1,10 @@
+/*
+ * SegmentLayer.cpp
+ *
+ * created on: Jan 29, 2016
+ *     Author: Sheng Lundquist
+ */
+
 #include "SegmentLayer.hpp"
 #include "components/ActivityComponentActivityOnly.hpp"
 #include "components/OriginalLayerNameParam.hpp"

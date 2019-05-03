@@ -1,3 +1,10 @@
+/*
+ * PvpLayer.cpp
+ *
+ *  Created on: Aug 16, 2016
+ *      Author: Austin Thresher
+ */
+
 #include "PvpLayer.hpp"
 #include "components/ActivityComponentActivityOnly.hpp"
 #include "components/PvpActivityBuffer.hpp"

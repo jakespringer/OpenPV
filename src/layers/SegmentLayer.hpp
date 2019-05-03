@@ -1,3 +1,10 @@
+/*
+ * SegmentLayer.hpp
+ *
+ * created on: Jan 29, 2016
+ *     Author: Sheng Lundquist
+ */
+
 #ifndef SEGMENTLAYER_HPP_
 #define SEGMENTLAYER_HPP_
 

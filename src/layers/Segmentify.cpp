@@ -1,3 +1,10 @@
+/*
+ * Segmentify.cpp
+ *
+ * created on: Feb 10, 2016
+ *     Author: Sheng Lundquist
+ */
+
 #include "Segmentify.hpp"
 #include "components/ActivityComponentActivityOnly.hpp"
 #include "components/OriginalLayerNameParam.hpp"

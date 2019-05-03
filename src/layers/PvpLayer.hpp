@@ -1,3 +1,10 @@
+/*
+ * PvpLayer.hpp
+ *
+ *  Created on: Aug 16, 2016
+ *      Author: Austin Thresher
+ */
+
 #ifndef PVPLAYER_HPP__
 #define PVPLAYER_HPP__
 

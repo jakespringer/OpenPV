@@ -1,3 +1,10 @@
+/*
+ * Segmentify.hpp
+ *
+ * created on: Feb 10, 2016
+ *     Author: Sheng Lundquist
+ */
+
 #ifndef SEGMENTIFY_HPP_
 #define SEGMENTIFY_HPP_
 
