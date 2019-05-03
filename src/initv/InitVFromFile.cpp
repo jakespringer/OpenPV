@@ -54,8 +54,19 @@ void InitVFromFile::calcV(float *V, const PVLayerLoc *loc) {
    if (isPvpFile) {
       FileStream fileStream(mVfilename, std::ios_base::in | std::ios_base::binary, false);
       BufferUtils::ActivityHeader header = BufferUtils::readActivityHeader(fileStream);
-      int fileType                       = header.fileType;
-      if (fileType == PVP_NONSPIKING_ACT_FILE_TYPE) {
+      FatalIf(
+            header.nx != loc->nxGlobal or header.ny != loc->nyGlobal or header.nf != loc->nf,
+            "%s Vfilename \"%s\" is %d-by-%d-by-%d, but the layer is %d-by-%d-by-%d.\n",
+            getDescription_c(),
+            mVfilename,
+            header.nx,
+            header.ny,
+            header.nf,
+            loc->nxGlobal,
+            loc->nyGlobal,
+            loc->nf);
+      int fileType = header.fileType;
+      if (header.fileType == PVP_NONSPIKING_ACT_FILE_TYPE) {
          readDenseActivityPvp(V, loc, fileStream, header);
       }
       else { // TODO: Handle sparse activity pvp files.
