@@ -43,6 +43,7 @@ void HyPerActivityBuffer::updateBufferCPU(double simTime, double deltaTime) {
    PVHalo const *halo = &getLayerLoc()->halo;
 
    int const numNeuronsAcrossBatch = mInternalState->getBufferSizeAcrossBatch();
+   pvAssert(V != nullptr);
 #ifdef PV_USE_OPENMP_THREADS
 #pragma omp parallel for schedule(static)
 #endif
