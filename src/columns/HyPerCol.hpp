@@ -126,6 +126,10 @@ class HyPerCol : public Subject, public ParamsInterface {
     */
    Observer *getNextObject(Observer const *currentObject) const;
 
+   static void expandRecursive(ObserverTable *objectTable, ObserverTable const *table);
+
+   ObserverTable getAllObjectsFlat();
+
    void advanceTimeLoop(Clock &runClock, int const runClockStartingStep);
    int advanceTime(double time);
    void nonblockingLayerUpdate(std::shared_ptr<LayerUpdateStateMessage const> updateMessage);
@@ -190,7 +194,6 @@ class HyPerCol : public Subject, public ParamsInterface {
    int initialize(PV_Init *initObj);
    virtual void initMessageActionMap() override;
    int ioParamsFillGroup(enum ParamsIOFlag ioFlag) override;
-   int checkDirExists(const char *dirname, struct stat *pathstat);
    virtual void fillComponentTable() override;
    void addComponent(BaseObject *component);
    inline void notifyLoop(std::vector<std::shared_ptr<BaseMessage const>> messages) {
