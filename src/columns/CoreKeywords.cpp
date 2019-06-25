@@ -12,6 +12,7 @@
 #include "layers/ANNErrorLayer.hpp"
 #include "layers/ANNLayer.hpp"
 #include "layers/ANNSquaredLayer.hpp"
+#include "layers/AdaptiveThresholdLCALayer.hpp"
 #include "layers/BackgroundLayer.hpp"
 #include "layers/BinningLayer.hpp"
 #include "layers/CloneVLayer.hpp"
@@ -130,6 +131,7 @@ void registerCoreKeywords() {
    factory->registerKeyword("ANNErrorLayer", Factory::create<ANNErrorLayer>);
    factory->registerKeyword("ANNLayer", Factory::create<ANNLayer>);
    factory->registerKeyword("ANNSquaredLayer", Factory::create<ANNSquaredLayer>);
+   factory->registerKeyword("AdaptiveThresholdLCALayer", Factory::create<AdaptiveThresholdLCALayer>);
    factory->registerKeyword("BackgroundLayer", Factory::create<BackgroundLayer>);
    factory->registerKeyword("BinningLayer", Factory::create<BinningLayer>);
    factory->registerKeyword("CloneVLayer", Factory::create<CloneVLayer>);

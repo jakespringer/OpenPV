@@ -1,6 +1,7 @@
 set (PVLibSrcCpp ${PVLibSrcCpp}
    ${SUBDIR}/LogTimeScaleController.cpp
    ${SUBDIR}/KneeTimeScaleController.cpp
+   ${SUBDIR}/AdaptiveThresholdActivityBuffer.cpp
    ${SUBDIR}/AdaptiveTimeScaleController.cpp
    ${SUBDIR}/ActivityBuffer.cpp
    ${SUBDIR}/ActivityComponent.cpp
@@ -87,6 +88,7 @@ set (PVLibSrcCpp ${PVLibSrcCpp}
 set (PVLibSrcHpp ${PVLibSrcHpp}
    ${SUBDIR}/LogTimeScaleController.hpp
    ${SUBDIR}/KneeTimeScaleController.hpp
+   ${SUBDIR}/AdaptiveThresholdActivityBuffer.hpp
    ${SUBDIR}/AdaptiveTimeScaleController.hpp
    ${SUBDIR}/ActivityBuffer.hpp
    ${SUBDIR}/ActivityComponent.hpp
@@ -176,6 +178,7 @@ set (PVLibSrcHpp ${PVLibSrcHpp}
 
 set (PVLibSrcHpp ${PVLibSrcKpp}
      ${SUBDIR}/ANNActivityBuffer.kpp
+     ${SUBDIR}/AdaptiveThresholdActivityBuffer.kpp
      ${SUBDIR}/GSynAccumulator.kpp
      ${SUBDIR}/HyPerLCAInternalStateBuffer.kpp
 )

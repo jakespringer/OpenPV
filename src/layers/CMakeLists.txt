@@ -2,6 +2,7 @@ set (PVLibSrcCpp ${PVLibSrcCpp}
    ${SUBDIR}/ANNErrorLayer.cpp
    ${SUBDIR}/ANNLayer.cpp
    ${SUBDIR}/ANNSquaredLayer.cpp
+   ${SUBDIR}/AdaptiveThresholdLCALayer.cpp
    ${SUBDIR}/BackgroundLayer.cpp
    ${SUBDIR}/BinningLayer.cpp
    ${SUBDIR}/DependentFirmThresholdCostLayer.cpp
@@ -37,6 +38,7 @@ set (PVLibSrcHpp ${PVLibSrcHpp}
    ${SUBDIR}/ANNErrorLayer.hpp
    ${SUBDIR}/ANNLayer.hpp
    ${SUBDIR}/ANNSquaredLayer.hpp
+   ${SUBDIR}/AdaptiveThresholdLCALayer.hpp
    ${SUBDIR}/BackgroundLayer.hpp
    ${SUBDIR}/BinningLayer.hpp
    ${SUBDIR}/CloneVLayer.hpp
