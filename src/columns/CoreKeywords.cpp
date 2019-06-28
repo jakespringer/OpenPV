@@ -68,6 +68,7 @@
 #include "probes/FirmThresholdCostFnProbe.hpp"
 #include "probes/KernelProbe.hpp"
 #include "probes/KneeTimeScaleProbe.hpp"
+#include "probes/JICTimeScaleProbe.hpp"
 #include "probes/L0NormLCAProbe.hpp"
 #include "probes/L0NormProbe.hpp"
 #include "probes/L1NormLCAProbe.hpp"
@@ -188,6 +189,7 @@ void registerCoreKeywords() {
    // Probes
    factory->registerKeyword("AdaptiveTimeScaleProbe", Factory::create<AdaptiveTimeScaleProbe>);
    factory->registerKeyword("KneeTimeScaleProbe", Factory::create<KneeTimeScaleProbe>);
+   factory->registerKeyword("JICTimeScaleProbe", Factory::create<JICTimeScaleProbe>);
    factory->registerKeyword("LogTimeScaleProbe", Factory::create<LogTimeScaleProbe>);
    factory->registerKeyword("ColumnEnergyProbe", Factory::create<ColumnEnergyProbe>);
    factory->registerKeyword(

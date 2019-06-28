@@ -1,6 +1,7 @@
 set (PVLibSrcCpp ${PVLibSrcCpp}
    ${SUBDIR}/LogTimeScaleController.cpp
    ${SUBDIR}/KneeTimeScaleController.cpp
+   ${SUBDIR}/JICTimeScaleController.cpp
    ${SUBDIR}/AdaptiveThresholdActivityBuffer.cpp
    ${SUBDIR}/AdaptiveTimeScaleController.cpp
    ${SUBDIR}/ActivityBuffer.cpp
@@ -88,6 +89,7 @@ set (PVLibSrcCpp ${PVLibSrcCpp}
 set (PVLibSrcHpp ${PVLibSrcHpp}
    ${SUBDIR}/LogTimeScaleController.hpp
    ${SUBDIR}/KneeTimeScaleController.hpp
+   ${SUBDIR}/JICTimeScaleController.hpp
    ${SUBDIR}/AdaptiveThresholdActivityBuffer.hpp
    ${SUBDIR}/AdaptiveTimeScaleController.hpp
    ${SUBDIR}/ActivityBuffer.hpp

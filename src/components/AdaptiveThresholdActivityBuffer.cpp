@@ -23,6 +23,7 @@ int AdaptiveThresholdActivityBuffer::ioParamsFillGroup(enum ParamsIOFlag ioFlag)
   ioParam_thresholdWindow(ioFlag);
   ioParam_displayPeriod(ioFlag);
   ioParam_simTimeOffset(ioFlag);
+  ioParam_AMax(ioFlag);
 
   return status;
 }
@@ -55,6 +56,16 @@ void AdaptiveThresholdActivityBuffer::ioParam_simTimeOffset(enum ParamsIOFlag io
          &mSimTimeOffset,
          mSimTimeOffset /*default*/,
          true /*warnIfAbsent*/);
+}
+
+void AdaptiveThresholdActivityBuffer::ioParam_AMax(enum ParamsIOFlag ioFlag) {
+   parameters()->ioParamValue(
+         ioFlag,
+         name,
+         "AMax",
+         &mAMax,
+         mAMax /*default*/,
+         false /*warnIfAbsent*/);
 }
 
 Response::Status AdaptiveThresholdActivityBuffer::allocateDataStructures() {
@@ -128,7 +139,8 @@ void AdaptiveThresholdActivityBuffer::updateBufferCPU(double simTime, double del
           loc->halo.lt,
           loc->halo.rt,
           loc->halo.dn,
-          loc->halo.up);
+          loc->halo.up,
+          mAMax);
 
   if (fmod(simTime + mSimTimeOffset, mDisplayPeriod) < deltaTime / 2) {
     updateThresholds(
@@ -162,7 +174,8 @@ void AdaptiveThresholdActivityBuffer::applyThresholds(
         int lt,
         int rt,
         int dn,
-        int up) {
+        int up,
+        float AMax) {
 #ifdef PV_USE_OPENMP_THREADS
 #pragma omp parallel for schedule(static)
 #endif
@@ -174,6 +187,8 @@ void AdaptiveThresholdActivityBuffer::applyThresholds(
     int kex = kIndexExtended(k, nx, ny, nf, lt, rt, dn, up);
     if (VBatch[k] < std::max(thresholds[k], 0.0f)) {
       ABatch[kex] = 0;
+    } else if (VBatch[k] > AMax) {
+      ABatch[kex] = AMax;
     }
   }
 }
@@ -196,14 +211,21 @@ void AdaptiveThresholdActivityBuffer::updateThresholds(
         int numProcesses) {
 
   // NOTE: cannot be parallel because of race condition
-  for (int kbatch = 0; kbatch < numNeurons * nbatch; kbatch++) {
-    int b = kbatch / numNeurons;
-    int k = kbatch % numNeurons;
-    float const *VBatch = V + b * numNeurons;
-    float *ABatch = A + b * (nx + lt + rt) * (ny + up + dn) * nf;
-    int kex = kIndexExtended(k, nx, ny, nf, lt, rt, dn, up);
-    thresholds[k] = thresholds[k] * (1.f - thresholdTimewindow) + ABatch[kex] * thresholdTimewindow;
+  for (int k=0; k < numNeurons; ++k) {
+    float aAcc = 0.0f;
+    for (int b=0; b < nbatch; ++b) {
+      float const *VBatch = V + b * numNeurons;
+      float *ABatch = A + b * (nx + lt + rt) * (ny + up + dn) * nf;
+      int kex = kIndexExtended(k, nx, ny, nf, lt, rt, dn, up);
+      aAcc += ABatch[kex];
+    }
+    thresholds[k] = thresholds[k] * (1.f - thresholdTimewindow) + (aAcc * thresholdTimewindow / ((float) nbatch));
   }
+
+//  // TESTING CODE
+//  for (int k = 0; k < numNeurons; k++) {
+//    thresholds[k] = 1.0;
+//  }
 
 #ifdef PV_USE_MPI
   MPI_Comm comm = icComm->globalCommunicator();
@@ -260,7 +282,7 @@ void AdaptiveThresholdActivityBuffer::allocateThresholds() {
   std::size_t size = (std::size_t) numNeurons * sizeof(*mThresholds);
   mThresholds = (float *) malloc(size);
   for (int i=0; i<numNeurons; ++i) {
-    mThresholds[i] = 0.f;
+    mThresholds[i] = 0.5f;
   }
 }
 
@@ -291,8 +313,6 @@ void CheckpointEntryAdaptiveThresholds::read(
   }
 
   MPI_Bcast(mThresholdsPtr, mNumThresholds, MPI_FLOAT, 0, getMPIBlock()->getComm());
-
-  ErrorLog().printf("called %f\n", mThresholdsPtr[0]);
 }
 
 void CheckpointEntryAdaptiveThresholds::remove(std::string const &checkpointDirectory) const {

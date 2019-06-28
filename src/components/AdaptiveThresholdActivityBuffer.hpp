@@ -26,6 +26,7 @@ class AdaptiveThresholdActivityBuffer : public HyPerActivityBuffer {
    virtual void ioParam_thresholdWindow(enum ParamsIOFlag ioFlag);
    virtual void ioParam_displayPeriod(enum ParamsIOFlag ioFlag);
    virtual void ioParam_simTimeOffset(enum ParamsIOFlag ioFlag);
+   virtual void ioParam_AMax(enum ParamsIOFlag ioFlag);
 
    /** @} */
   public:
@@ -67,7 +68,8 @@ class AdaptiveThresholdActivityBuffer : public HyPerActivityBuffer {
         int lt,
         int rt,
         int dn,
-        int up);
+        int up,
+        float AMax);
 
    static void updateThresholds(
         int nbatch,
@@ -103,6 +105,7 @@ class AdaptiveThresholdActivityBuffer : public HyPerActivityBuffer {
     double mDisplayPeriod             = DBL_MAX;
     double mSimTimeOffset             = 0.;
     int mNumProcesses                 = -1;
+    float mAMax                       = FLT_MAX;
 
 #ifdef PV_USE_CUDA
    PVCuda::CudaBuffer *mCudaThresholds = nullptr;
