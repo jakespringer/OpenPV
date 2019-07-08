@@ -33,6 +33,8 @@ class AdaptiveThresholdActivityBuffer : public HyPerActivityBuffer {
    AdaptiveThresholdActivityBuffer(char const *name, PVParams *params, Communicator const *comm);
 
    virtual ~AdaptiveThresholdActivityBuffer();
+
+   float const* getThresholds() { return mThresholds; }
   protected:
    AdaptiveThresholdActivityBuffer() {}
 
@@ -59,7 +61,7 @@ class AdaptiveThresholdActivityBuffer : public HyPerActivityBuffer {
    static void applyThresholds(
         int nbatch,
         int numNeurons,
-        float const* V,
+        float const *V,
         float const* thresholds,
         float *A,
         int nx,

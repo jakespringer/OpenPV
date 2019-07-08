@@ -165,7 +165,7 @@ void AdaptiveThresholdActivityBuffer::updateBufferCPU(double simTime, double del
 void AdaptiveThresholdActivityBuffer::applyThresholds(
         int nbatch,
         int numNeurons,
-        float const* V,
+        float const *V,
         float const* thresholds,
         float *A,
         int nx,
@@ -182,13 +182,14 @@ void AdaptiveThresholdActivityBuffer::applyThresholds(
   for (int kbatch = 0; kbatch < numNeurons * nbatch; kbatch++) {
     int b = kbatch / numNeurons;
     int k = kbatch % numNeurons;
-    float const *VBatch = V + b * numNeurons;
+    float *VBatch = (float*) V + b * numNeurons;
     float *ABatch = A + b * (nx + lt + rt) * (ny + up + dn) * nf;
     int kex = kIndexExtended(k, nx, ny, nf, lt, rt, dn, up);
     if (VBatch[k] < std::max(thresholds[k], 0.0f)) {
       ABatch[kex] = 0;
     } else if (VBatch[k] > AMax) {
-      ABatch[kex] = AMax;
+      ABatch[kex] = 0; // intentional, if this happens it is blowing up
+      VBatch[k] = 0;
     }
   }
 }
@@ -219,7 +220,8 @@ void AdaptiveThresholdActivityBuffer::updateThresholds(
       int kex = kIndexExtended(k, nx, ny, nf, lt, rt, dn, up);
       aAcc += ABatch[kex];
     }
-    thresholds[k] = thresholds[k] * (1.f - thresholdTimewindow) + (aAcc * thresholdTimewindow / ((float) nbatch));
+    //thresholds[k] = thresholds[k] * (1.f - thresholdTimewindow) + (aAcc * thresholdTimewindow / ((float) nbatch));
+    thresholds[k] = 1.0f;
   }
 
 //  // TESTING CODE
@@ -282,7 +284,7 @@ void AdaptiveThresholdActivityBuffer::allocateThresholds() {
   std::size_t size = (std::size_t) numNeurons * sizeof(*mThresholds);
   mThresholds = (float *) malloc(size);
   for (int i=0; i<numNeurons; ++i) {
-    mThresholds[i] = 0.5f;
+    mThresholds[i] = 1.0f;
   }
 }
 
